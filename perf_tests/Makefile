@@ -33,7 +33,7 @@ xmp-run: xmp_tester
 	@./xmp_tester
 
 gmp_tester:
-	g++ $(INC) $(LIB) gmp_tester.cc -o gmp_tester -lgmp -fopenmp
+	g++ $(INC) $(LIB) -O2 -g -fno-omit-frame-pointer gmp_tester.cc -o gmp_tester -lgmp -fopenmp
 
 xmp_tester: 
 	@echo
@@ -62,5 +62,5 @@ turing:
 	nvcc $(INC) $(LIB) -I../include -arch=sm_75 xmp_tester.cu -o xmp_tester -lgmp
 
 ampere:
-	nvcc $(INC) $(LIB) -I../include -arch=sm_80 xmp_tester.cu -o xmp_tester -lgmp
+	/usr/local/cuda-13.0/bin/nvcc $(INC) $(LIB) -I../include -arch=sm_86 xmp_tester.cu -o xmp_tester -lgmp
 

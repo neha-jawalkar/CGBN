@@ -972,7 +972,6 @@ __device__ __forceinline__ void cgbn_env_t<context_t, bits, syncable>::modular_p
 template<class context_t, uint32_t bits, cgbn_syncable_t syncable>
 __device__ __forceinline__ void cgbn_env_t<context_t, bits, syncable>::gcd(cgbn_t &r, const cgbn_t &a, const cgbn_t &b) const {
   typedef cgbn::unpadded_t<cgbn_env_t> unpadded;
-  
   cgbn::core_t<unpadded>::gcd(r._limbs, a._limbs, b._limbs);
 }
 
