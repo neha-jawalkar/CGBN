@@ -9,6 +9,7 @@ pick:
 	@echo "   make volta"
 	@echo "   make turing"
 	@echo "   make ampere"
+	@echo "   make hopper"
 	@echo
 
 clean:
@@ -53,6 +54,10 @@ ampere: check
 	make -C unit_tests ampere
 	make -C perf_tests ampere
 
+hopper: check
+	make -C samples hopper
+	make -C unit_tests hopper
+	make -C perf_tests hopper
 check:
 	@if [ -z "$(GTEST_HOME)" -a ! -d "gtest" ]; then echo "Google Test framework required, see documentation"; exit 1; fi
 
