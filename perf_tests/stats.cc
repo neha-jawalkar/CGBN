@@ -30,6 +30,7 @@ typedef struct stats_s
     double time; /* seconds */
     double instances;
     double throughput;
+    double avg_iterations;
     struct stats_s *next;
 } stats_t;
 

@@ -85,6 +85,7 @@ public:
         cgbn_mem_t<bits> o0, o1;
         cgbn_mem_t<bits> w0, w1;
         cgbn_mem_t<bits> r;
+        uint64_t itr;
     } x_instance_t;
 
     typedef cgbn_context_t<tpi> context_t;
@@ -205,6 +206,13 @@ void x_run_test(stats_t *stats, test_t operation, void *instances, uint32_t coun
     x_run_test<tpi, bits>(operation, (x_instance_t *)gpuInstances, count);
     for (int32_t run = 0; run < repetitions; run++)
     {
+        printf("Run %d. Before=\n", run);
+        #pragma omp parallel for
+        for(int i = 0; i < count; i++)
+        {
+            if(i < 10) printf("Itr=%lu\n", ((x_instance_t *)instances)[i].itr);
+            sum += ((x_instance_t *)instances)[i].itr;
+        }
         CUDA_CHECK(cudaDeviceSynchronize());
         CUDA_CHECK(cudaEventRecord(start, 0));
         x_run_test<tpi, bits>(operation, (x_instance_t *)gpuInstances, count);
@@ -217,11 +225,23 @@ void x_run_test(stats_t *stats, test_t operation, void *instances, uint32_t coun
     }
     printf("\n");
     total = total / 1000.0;
+    
+    CUDA_CHECK(cudaMemcpy(instances, gpuInstances, sizeof(x_instance_t) * count, cudaMemcpyDeviceToHost));
     CUDA_CHECK(cudaFree(gpuInstances));
     stats->instances = ((int64_t)count) * LOOP_COUNT(bits, operation);
     stats->time = total / (double)repetitions;
     stats->throughput = stats->instances / stats->time;
     stats->next = NULL;
+
+    uint64_t sum = 0;
+    #pragma omp parallel for
+    for(int i = 0; i < count; i++)
+    {
+        if(i < 10) printf("Itr=%lu\n", ((x_instance_t *)instances)[i].itr);
+        sum += ((x_instance_t *)instances)[i].itr;
+    }
+    stats->avg_iterations = (double)sum / (double)count;
+    printf("Avg iterations: %0.2f\n", stats->avg_iterations);
 }
 
 bool x_supported_size(uint32_t size)

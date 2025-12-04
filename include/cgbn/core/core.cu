@@ -319,7 +319,7 @@ namespace cgbn
     __device__ __forceinline__ static uint32_t ctzt(const uint32_t a[LIMBS]);
 
     /* NUMBER THEORETIC ROUTINES */
-    __device__ __forceinline__ static void gcd(uint32_t r[LIMBS], const uint32_t a[LIMBS], const uint32_t b[LIMBS]);
+    __device__ __forceinline__ static void gcd(uint32_t r[LIMBS], const uint32_t a[LIMBS], const uint32_t b[LIMBS], uint64_t *itr);
     __device__ __forceinline__ static void binary_inverse(uint32_t inv[LIMBS], const uint32_t x[LIMBS]);
     __device__ __forceinline__ static bool modular_inverse(uint32_t inv[LIMBS], const uint32_t x[LIMBS], const uint32_t y[LIMBS]);
 

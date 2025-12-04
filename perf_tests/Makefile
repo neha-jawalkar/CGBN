@@ -66,4 +66,4 @@ ampere:
 	/usr/local/cuda-13.0/bin/nvcc $(INC) $(LIB) -I../include -arch=sm_86 xmp_tester.cu -o xmp_tester -lgmp
 
 hopper:
-	        /usr/local/cuda-12.8/bin/nvcc $(INC) $(LIB) -I../include -arch=sm_90a xmp_tester.cu -o xmp_tester -lgmp
+	        /usr/local/cuda-12.8/bin/nvcc -lineinfo $(INC) $(LIB) -I../include -arch=sm_90a xmp_tester.cu -o xmp_tester -lgmp

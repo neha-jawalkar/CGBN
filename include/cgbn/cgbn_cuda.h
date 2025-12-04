@@ -216,7 +216,7 @@ class cgbn_env_t {
 
   /* math */
   __device__ __forceinline__ void       binary_inverse(cgbn_t &r, const cgbn_t &x) const;
-  __device__ __forceinline__ void       gcd(cgbn_t &r, const cgbn_t &a, const cgbn_t &b) const;
+  __device__ __forceinline__ void       gcd(cgbn_t &r, const cgbn_t &a, const cgbn_t &b, uint64_t *itr) const;
   __device__ __forceinline__ bool       modular_inverse(cgbn_t &r, const cgbn_t &x, const cgbn_t &modulus) const;
   __device__ __forceinline__ void       modular_power(cgbn_t &r, const cgbn_t &x, const cgbn_t &exponent, const cgbn_t &modulus) const;
 
